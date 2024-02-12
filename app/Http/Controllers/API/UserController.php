@@ -74,7 +74,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $user = User::where('email', $request->emil)->first();
+            $user = User::where('email', $request->email)->first();
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return ResponseFormatter::success([
@@ -82,11 +82,12 @@ class UserController extends Controller
                 'token_type' => 'Bearer',
                 'user' => $user,
             ], 'Registered');
+
         } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => 'Something went wrong',
                 'error' => $error,
-            ], 'Authentication Failed', 500);
+            ], 'Register Failed', 500);
         }
     }
 
